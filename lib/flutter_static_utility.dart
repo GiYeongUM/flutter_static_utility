@@ -2,8 +2,6 @@ library flutter_static_utility;
 
 import 'dart:math';
 
-import 'package:flutter/material.dart';
-
 /// email regex
 bool checkEmailRegex({required String email}) {
   return RegExp(
@@ -35,11 +33,10 @@ bool checkPasswordRegex(
 }
 
 /// n time ago
-String timeAgo({required BuildContext context, required DateTime dateTime, bool numericDates = true}) {
+String timeAgo({required String languageCode, required DateTime dateTime, bool numericDates = true}) {
   final dateNow = DateTime.now();
   final difference = dateNow.difference(dateTime);
-  final local = Localizations.localeOf(context);
-  final isKr = (local.languageCode == 'ko_KR');
+  final isKr = (languageCode == 'ko_KR');
   if (difference.inDays >= 364) {
     return (difference.inDays ~/ 364) == 1
         ? '1 ${isKr ? '년 전' : 'year ago'}'

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_static_utility/flutter_static_utility.dart';
 
 void main() {
   runApp(const MyApp());
@@ -33,8 +34,9 @@ class ExamplePage extends StatelessWidget {
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: const <Widget>[
-
+            children: <Widget>[
+              const Text('3000', style: TextStyle(color: Colors.black),),
+              Text(thousandToData(3000).data as String, style: const TextStyle(color: Colors.black),),
             ],
           ),
         ),

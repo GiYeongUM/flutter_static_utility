@@ -1,32 +1,33 @@
-library flutter_utils;
+library flutter_static_utility;
 
-import 'dart:io';
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+
 /// email regex
-checkEmailRegex({required String email}) {
+bool checkEmailRegex({required String email}) {
   return RegExp(
       r"^[a-zA-Z\d.a-zA-Z\d.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z\d]+\.[a-zA-Z]+").hasMatch(email);
 }
 
 /// phoneNumber regex (Korean)
-checkPhoneNumberRegex({required String phoneNumber}) {
+bool checkPhoneNumberRegex({required String phoneNumber}) {
   return RegExp(r'^010-?([0-9]{4})-?([0-9]{4})$').hasMatch(phoneNumber);
 }
 
 /// nickname regex (Korean)
-checkNickNameRegex(
+bool checkNickNameRegex(
     {required String nickName, required int min, required int max}) {
   return RegExp('^[ㄱ-ㅎ가-힣0-9a-zA-Z ]{$min,$max}\$').hasMatch(nickName.trim());
 }
 
 /// SMS regex
-checkSMSCodeRegex({required String code, required int length}) {
+bool checkSMSCodeRegex({required String code, required int length}) {
   return RegExp('^[0-9]{$length}\$').hasMatch(code);
 }
 
 /// password regex
-checkPasswordRegex(
+bool checkPasswordRegex(
     {required String password, required int min, required int max}) {
   return RegExp(
       '^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@!%*#?~^,.&+=])[A-Za-z0-9@!%*#?~^,.&+=]{$min,$max}\$')
@@ -34,10 +35,11 @@ checkPasswordRegex(
 }
 
 /// n time ago
-String timeAgo({required DateTime dateTime, bool numericDates = true}) {
+String timeAgo({required BuildContext context, required DateTime dateTime, bool numericDates = true}) {
   final dateNow = DateTime.now();
   final difference = dateNow.difference(dateTime);
-  final isKr = (Platform.localeName == 'ko_KR');
+  final local = Localizations.localeOf(context);
+  final isKr = (local.languageCode == 'ko_KR');
   if (difference.inDays >= 364) {
     return (difference.inDays ~/ 364) == 1
         ? '1 ${isKr ? '년 전' : 'year ago'}'
